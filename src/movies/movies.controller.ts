@@ -1,20 +1,26 @@
 // 터미널에서 nest g co movies [--no-spec] 명령어 실행 [optional]
 import {
-  Body,
   Controller,
-  Get,
-  Header, HttpCode, Ip,
+  Header,
+  HttpCode,
   Param,
+  Query,
+  Body,
+  Ip,
+  Get,
   Patch,
   Post,
-  Query,
   Req,
   Res,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { MoviesService } from './movies.service';
 
 @Controller('movies')
 export class MoviesController {
+  // 생성자 파라미터로 서비스 추가 => controller의 생성자에 provider(@Injectable()) 객체들을 추가
+  constructor(private readonly moviesService: MoviesService) {}
+
   // Get
   @Get()
   // Headers 속성을 추가해 준다.
@@ -37,7 +43,8 @@ export class MoviesController {
   // Param /movies/id
   @Get('/:id')
   getOne(@Param('id') movieId: string): string {
-    return `this will return one ${movieId}`;
+    // service의 메서드 호출
+    return this.moviesService.getOne(movieId);
   }
 
   // Body
