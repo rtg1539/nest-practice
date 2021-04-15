@@ -1,3 +1,4 @@
+// nest g s movies --no-spec
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
