@@ -12,12 +12,15 @@ import {
   Post,
   Req,
   Res,
+  UseFilters,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { MoviesService } from './movies.service';
 import { CreateMovieDTO } from './dto/create-movie.dto';
+import { HttpExceptionFilter } from '../http-exception.filter';
 
 @Controller('movies')
+@UseFilters(new HttpExceptionFilter())
 export class MoviesController {
   // 생성자 파라미터로 서비스 추가 => controller의 생성자에 provider(@Injectable()) 객체들을 추가
   constructor(private readonly moviesService: MoviesService) {}
