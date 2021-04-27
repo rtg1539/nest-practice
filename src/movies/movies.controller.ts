@@ -21,7 +21,7 @@ import { CreateMovieDTO } from './dto/create-movie.dto';
 import { HttpExceptionFilter } from '../http-exception.filter';
 import { AuthGuard } from '../auth.guard';
 import { Roles } from '../roles.decorator';
-import { RolesEnum } from '../roles.enum'
+import { RolesEnum } from '../roles.enum';
 
 @Controller('movies')
 @UseFilters(new HttpExceptionFilter())
@@ -58,6 +58,7 @@ export class MoviesController {
   // Body
   @Post()
   create(@Body() movieData: CreateMovieDTO) {
+    throw Error('error');
     // validation pipe를 추가하지 않으면 타입에 맞지 않는 값이 넘어와도 에러는 나지 않는다.
     // pipe를 추가하면 타입에 맞지 않는 값이 넘어오면 에러를 발생 시킨다.
     console.log(movieData);

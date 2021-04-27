@@ -5,17 +5,22 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { RuntimeException } from '@nestjs/core/errors/exceptions/runtime.exception';
+import RuntimeError = WebAssembly.RuntimeError;
 
-@Catch(HttpException)
+@Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
+  catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
-    const status = exception.getStatus();
 
-    response.status(status).json({
-      statusCode: status,
+    // console.log(exception instanceof HttpException ? exception.message : '');
+    console.log(exception instanceof Error);
+    // console.log(exception instanceof RuntimeException ? exception.message : '');
+
+    response.status(200).json({
+      statusCode: 200,
       timestamp: new Date().toISOString(),
       path: request.url,
     });
