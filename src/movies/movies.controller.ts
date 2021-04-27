@@ -21,6 +21,7 @@ import { CreateMovieDTO } from './dto/create-movie.dto';
 import { HttpExceptionFilter } from '../http-exception.filter';
 import { AuthGuard } from '../auth.guard';
 import { Roles } from '../roles.decorator';
+import { RolesEnum } from '../roles.enum'
 
 @Controller('movies')
 @UseFilters(new HttpExceptionFilter())
@@ -88,9 +89,15 @@ export class MoviesController {
   }
 
   @Get('/mo/momo')
-  @Roles('admin')
+  @Roles(RolesEnum.User)
   momo() {
     return 'momo';
+  }
+
+  @Get('/mo/momomo')
+  @Roles(RolesEnum.Admin)
+  momomo() {
+    return 'momomo';
   }
 
   /*
