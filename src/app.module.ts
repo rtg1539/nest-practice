@@ -8,10 +8,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MoviesModule } from './movies/movies.module';
 import { LogMiddleware } from './log.middleware';
+import { AuthModule } from './auth/auth.module';
 // import cors from 'cors';
-
+// 전역 가드 추가
 @Module({
-  imports: [MoviesModule],
+  imports: [MoviesModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })

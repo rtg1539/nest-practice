@@ -6,6 +6,7 @@ import {
   Param,
   Query,
   Body,
+  UseGuards,
   Ip,
   Get,
   Patch,
@@ -18,6 +19,8 @@ import { Request, Response } from 'express';
 import { MoviesService } from './movies.service';
 import { CreateMovieDTO } from './dto/create-movie.dto';
 import { HttpExceptionFilter } from '../http-exception.filter';
+import { AuthGuard } from '../auth.guard';
+import { Roles } from '../roles.decorator';
 
 @Controller('movies')
 @UseFilters(new HttpExceptionFilter())
@@ -75,6 +78,19 @@ export class MoviesController {
     console.log(Object.keys(request));
     console.log(Object.keys(response));
     return 'this is home';
+  }
+
+  // 컨트롤러에서 가드 사용
+  @UseGuards(AuthGuard)
+  @Get('/mo/mo')
+  mo() {
+    return 'mo';
+  }
+
+  @Get('/mo/momo')
+  @Roles('admin')
+  momo() {
+    return 'momo';
   }
 
   /*
