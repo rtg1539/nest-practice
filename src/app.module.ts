@@ -9,12 +9,21 @@ import { AppService } from './app.service';
 import { MoviesModule } from './movies/movies.module';
 import { LogMiddleware } from './log.middleware';
 import { AuthModule } from './auth/auth.module';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { LoggingInterceptor } from './logging.interceptor';
+import { TransformInterceptor } from './transform.interceptor';
+import { ErrorsInterceptor } from './errors.interceptor';
 // import cors from 'cors';
 // 전역 가드 추가
 @Module({
   imports: [MoviesModule, AuthModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    { provide: APP_INTERCEPTOR, useClass: LoggingInterceptor },
+    { provide: APP_INTERCEPTOR, useClass: TransformInterceptor },
+    { provide: APP_INTERCEPTOR, useClass: ErrorsInterceptor },
+  ],
 })
 export class AppModule implements NestModule {
   // 미들웨어 추가
